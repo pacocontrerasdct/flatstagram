@@ -1,33 +1,30 @@
 // create Comment class here
 class Comment {
 
-  constructor (image_id, user_text) {
-    this.image_id = image_id
-    this.user_text = user_text
-    this.all = []
+  constructor (imageId, userText) {
+    this._imageId = imageId;
+    this._userText = userText;
   }
 
-  init() {
-    this.image_id
-    this.user_text
-    this.findImage(image_id)
+  // control checks
+  isEmptyOrDuplicated() {
+    let empty =  (this._userText === "" ) ? "A comment can't be empty" : this.isRepeated();
+    return empty;
   }
 
-  all() {
-    console.log("Comment.all should return all of the comment objects in an array")
-    return this.all
+  isRepeated() {
+    let isDuplicatedComment = Image.all[this._imageId].comments.findIndex( item => item == this._userText)
+    return isDuplicatedComment !== -1 ? "A comment can't be repeated" : 0;
   }
 
+  // find image and add comment to 'comments' attr
   findImage() {
-    let current_img_comments_tag = $( `#image-${this.image_id} > ul` )
-    Image.all[this.image_id].comments.push(this.user_text)
-    return current_img_comments_tag
+    Image.all[this._imageId].comments.push(this._userText);
   }
 
+  // build new comment tag
   commentEl() {
-
-    return `<li class="comment-${this.image_id}" style="margin-bottom: 10px">${this.user_text}</li>`;
+    return `<li class="comment-${this._imageId}" style="margin-bottom: 10px">${this._userText}</li>`;
   }
-
 }
 
